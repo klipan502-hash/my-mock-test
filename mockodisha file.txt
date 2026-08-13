@@ -1,0 +1,1338 @@
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odisha Police SI Assessment Portal - 100 Marks Sectional Test</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #1e40af;
+      --bg-dark: #0f172a;
+      --bg-light: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
+      
+      --status-not-visited: #f1f5f9;
+      --status-not-answered: #ef4444;
+      --status-answered: #10b981;
+      --status-marked: #8b5cf6;
+      --status-ans-marked: #6366f1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+    }
+
+    #exam-app-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    header {
+      height: 48px;
+      flex-shrink: 0;
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      background-color: #2563eb;
+      color: #fff;
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-header {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #instructions-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+      z-index: 99999;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .instructions-card {
+      max-width: 850px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    .instructions-header {
+      text-align: center;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .instructions-header h1 {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .meta-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .meta-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .meta-card .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .meta-card .val {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    .instructions-body {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+
+    .instructions-body h3 {
+      font-size: 1.05rem;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .instructions-body ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .instructions-body li {
+      margin-bottom: 8px;
+    }
+
+    .input-group-box {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 18px;
+      margin-top: 24px;
+    }
+
+    .input-group-box label.title-label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+
+    .input-group-box input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .input-group-box input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    .declaration-box {
+      background: #fefce8;
+      border: 1px solid #fef08a;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .declaration-box input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .declaration-box span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #854d0e;
+    }
+
+    .btn-start-exam {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: #10b981;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-start-exam:hover {
+      background: #059669;
+    }
+
+    .btn-start-exam:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+
+    .app-container {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .question-section {
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border-color);
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .question-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fafafa;
+      flex-shrink: 0;
+    }
+
+    .q-number {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .marks-info {
+      font-size: 0.75rem;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .question-body {
+      flex: 1;
+      min-height: 0;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .question-text {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background-color: #ffffff;
+    }
+
+    .option-card:hover {
+      border-color: #93c5fd;
+      background-color: #f0f9ff;
+    }
+
+    .option-card.selected {
+      border-color: var(--primary);
+      background-color: #eff6ff;
+    }
+
+    .option-radio {
+      width: 16px;
+      height: 16px;
+      margin-right: 12px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .option-label {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .question-footer {
+      padding: 10px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+      gap: 8px;
+    }
+
+    .footer-left, .footer-right {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .btn-warning {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .btn-warning:hover { background: #fde68a; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-submit {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .btn-submit:hover { background: #059669; }
+
+    .mobile-submit-btn {
+      display: none;
+    }
+
+    .sidebar {
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      border-left: 1px solid var(--border-color);
+    }
+
+    .user-profile {
+      padding: 12px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .user-id {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .timer-card {
+      margin: 12px 14px 6px 14px;
+      padding: 10px 12px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .timer-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .timer-display {
+      font-family: monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #dc2626;
+    }
+
+    .legend-box {
+      padding: 10px 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      border-bottom: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: #475569;
+    }
+
+    .legend-badge {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .badge-visited { background: var(--status-not-visited); color: #475569; border: 1px solid #cbd5e1; }
+    .badge-answered { background: var(--status-answered); }
+    .badge-not-answered { background: var(--status-not-answered); }
+    .badge-marked { background: var(--status-marked); }
+    .badge-ans-marked { background: var(--status-ans-marked); position: relative; }
+    .badge-ans-marked::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 4px;
+      height: 4px;
+      background: #10b981;
+      border-radius: 50%;
+    }
+
+    .palette-container {
+      padding: 12px 14px;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    .palette-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .palette-btn {
+      height: 34px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--status-not-visited);
+      color: #334155;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .palette-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .palette-btn.active {
+      outline: 2px solid #2563eb;
+      outline-offset: 1px;
+    }
+
+    .palette-btn.status-not-answered {
+      background: var(--status-not-answered);
+      color: #ffffff;
+      border-color: var(--status-not-answered);
+    }
+
+    .palette-btn.status-answered {
+      background: var(--status-answered);
+      color: #ffffff;
+      border-color: var(--status-answered);
+    }
+
+    .palette-btn.status-marked {
+      background: var(--status-marked);
+      color: #ffffff;
+      border-color: var(--status-marked);
+    }
+
+    .palette-btn.status-ans-marked {
+      background: var(--status-ans-marked);
+      color: #ffffff;
+      border-color: var(--status-ans-marked);
+    }
+
+    .palette-btn.status-ans-marked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 5px;
+      height: 5px;
+      background: #34d399;
+      border-radius: 50%;
+    }
+
+    .sidebar-footer {
+      padding: 12px 14px;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer .btn {
+      width: 100%;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      width: 90%;
+      max-width: 750px;
+      max-height: 85vh;
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .score-summary {
+      display: flex;
+      justify-content: space-around;
+      background: #f8fafc;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .score-box h3 {
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    .score-box p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .result-item {
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    .result-item.correct { border-left: 4px solid #10b981; }
+    .result-item.incorrect { border-left: 4px solid #ef4444; }
+    .result-item.unanswered { border-left: 4px solid #94a3b8; }
+
+    .result-q-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+
+    .mobile-palette-btn {
+      display: none;
+    }
+
+    .sidebar-overlay-backdrop {
+      display: none;
+      position: fixed;
+      top: 48px;
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 48px);
+      background: rgba(15, 23, 42, 0.5);
+      z-index: 999;
+    }
+
+    /* Styles for Exit Warning Modal */
+    .exit-modal-box {
+      max-width: 420px;
+      text-align: center;
+      padding: 24px;
+      border-radius: 12px;
+    }
+    .exit-modal-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    .exit-modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .exit-modal-text {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .exit-btn-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: fixed;
+        top: 48px;
+        right: -100%;
+        width: 290px;
+        height: calc(100% - 48px);
+        z-index: 1000;
+        transition: right 0.25s ease-in-out;
+        box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+      }
+      .sidebar.open {
+        right: 0;
+      }
+      .sidebar-overlay-backdrop.show {
+        display: block;
+      }
+      .btn {
+        padding: 7px 8px;
+        font-size: 0.72rem;
+      }
+      .meta-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .mobile-submit-btn {
+        display: inline-block;
+      }
+      .mobile-palette-btn {
+        display: inline-block;
+      }
+    }
+  </style>
+
+
+
+  <!-- Instructions Screen -->
+  <div id="instructions-overlay">
+    <div class="instructions-card">
+      <div class="instructions-header">
+        <h1>Odisha Police SI Recruitment Examination</h1>
+        <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Special 100 Marks Sectional Practice Test</p>
+      </div>
+
+      <div class="meta-cards-grid">
+        <div class="meta-card">
+          <div class="label">Total Questions</div>
+          <div class="val">100 MCQs</div>
+        </div>
+        <div class="meta-card">
+          <div class="label">Time Limit</div>
+          <div class="val">45 Minutes</div>
+        </div>
+        <div class="meta-card">
+          <div class="label">Negative Marking</div>
+          <div class="val" style="color: #dc2626;">-0.25 Marks</div>
+        </div>
+      </div>
+
+      <div class="instructions-body">
+        <h3>Sectional Breakdown:</h3>
+        <ul>
+          <li><strong>Section 1:</strong> General Knowledge &amp; Odisha GK (Q1 – Q40)</li>
+          <li><strong>Section 2:</strong> Advanced English Grammar (Q41 – Q70)</li>
+          <li><strong>Section 3:</strong> Computer Operations &amp; IT (Q71 – Q100)</li>
+        </ul>
+
+        <h3>General Guidelines:</h3>
+        <ol>
+          <li>The countdown timer at the top right displays the remaining time. The exam will automatically auto-submit when the timer reaches 00:00.</li>
+          <li>Each correct answer earns <strong>+1.0 mark</strong>. Each wrong attempt deducts <strong>-0.25 marks</strong>.</li>
+          <li>Click <strong>Save &amp; Next</strong> to record your answer and advance to the next question.</li>
+        </ol>
+
+        <div class="input-group-box">
+          <label class="title-label" for="candidate-name-input">Candidate Full Name:</label>
+          <input type="text" id="candidate-name-input" placeholder="Enter your full name..." oninput="validateStartForm()">
+          
+          <label class="declaration-box">
+            <input type="checkbox" id="declaration-checkbox" onchange="validateStartForm()">
+            <span>I have read all instructions carefully and am ready to begin the exam.</span>
+          </label>
+
+          <button id="btn-start-test" class="btn-start-exam" disabled="" onclick="startMockTest()">Start Examination</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Exam Application -->
+  <div id="exam-app-wrapper">
+    <header>
+      <div class="brand-title">
+        <span>ODISHA POLICE SI PORTAL</span>
+        <span class="brand-badge">100 MCQ SECTIONAL TEST</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-header mobile-palette-btn" onclick="toggleMobileSidebar()">Palette ☰</button>
+        <button class="btn-header" onclick="toggleFullScreen()">Full Screen ⛶</button>
+      </div>
+    </header>
+
+    <div class="app-container">
+      <div class="sidebar-overlay-backdrop" id="sidebar-backdrop" onclick="toggleMobileSidebar()"></div>
+
+      <main class="question-section">
+        <div class="question-header">
+          <span class="q-number" id="q-header-title">Question 1</span>
+          <span class="marks-info">+1.0 Marks | -0.25 Negative</span>
+        </div>
+
+        <div class="question-body">
+          <div class="question-text" id="question-text">Loading Question...</div>
+          <div class="options-container" id="options-container"></div>
+        </div>
+
+        <div class="question-footer">
+          <div class="footer-left">
+            <button class="btn btn-warning" onclick="markForReview()">Mark for Review</button>
+            <button class="btn btn-secondary" onclick="clearResponse()">Clear</button>
+          </div>
+          <div class="footer-right">
+            <button class="btn btn-secondary" id="btn-prev" onclick="navigateQuestion(-1)">Previous</button>
+            <button class="btn btn-primary" id="btn-next" onclick="saveAndNext()">Save &amp; Next</button>
+            <button class="btn btn-submit mobile-submit-btn" onclick="submitExam()">Submit</button>
+          </div>
+        </div>
+      </main>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="user-profile">
+          <div class="avatar" id="user-avatar">SI</div>
+          <div class="user-info">
+            <span class="user-name" id="user-name-display">Candidate</span>
+            <span class="user-id">Roll No: OPSI-2026-100</span>
+          </div>
+        </div>
+
+        <div class="timer-card">
+          <span class="timer-title">Time Remaining</span>
+          <span class="timer-display" id="timer-display">45:00</span>
+        </div>
+
+        <div class="legend-box">
+          <div class="legend-item"><span class="legend-badge badge-visited" id="cnt-visited">0</span> Not Visited</div>
+          <div class="legend-item"><span class="legend-badge badge-not-answered" id="cnt-not-answered">0</span> Not Answered</div>
+          <div class="legend-item"><span class="legend-badge badge-answered" id="cnt-answered">0</span> Answered</div>
+          <div class="legend-item"><span class="legend-badge badge-marked" id="cnt-marked">0</span> Marked</div>
+          <div class="legend-item" style="grid-column: span 2;"><span class="legend-badge badge-ans-marked" id="cnt-ans-marked">0</span> Ans &amp; Marked</div>
+        </div>
+
+        <div class="palette-container">
+          <div class="palette-title">Question Palette</div>
+          <div class="palette-grid" id="palette-grid"></div>
+        </div>
+
+        <div class="sidebar-footer">
+          <button class="btn btn-submit" onclick="submitExam()">Submit Test</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Exit Protection Warning Modal (Triggered on Back Button press) -->
+  <div class="modal-overlay" id="exit-modal">
+    <div class="modal-content exit-modal-box">
+      <div class="exit-modal-icon">⚠️</div>
+      <div class="exit-modal-title">Quit Examination?</div>
+      <div class="exit-modal-text">Are you sure you want to quit this test? Your current progress will be lost if you leave without submitting.</div>
+      <div class="exit-btn-group">
+        <button class="btn btn-primary" onclick="cancelExitTest()">Continue Test</button>
+        <button class="btn btn-warning" onclick="confirmExitTest()">Quit Test</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div class="modal-overlay" id="result-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Odisha Police SI Test Performance Report</h2>
+      </div>
+
+      <div class="score-summary">
+        <div class="score-box">
+          <h3 id="res-score">0 / 100</h3>
+          <p>Total Score</p>
+        </div>
+        <div class="score-box">
+          <h3 id="res-correct" style="color:#10b981;">0</h3>
+          <p>Correct</p>
+        </div>
+        <div class="score-box">
+          <h3 id="res-wrong" style="color:#ef4444;">0</h3>
+          <p>Incorrect</p>
+        </div>
+      </div>
+
+      <div id="results-detail-list"></div>
+
+      <div style="text-align: center; margin-top: 18px;">
+        <button class="btn btn-primary" onclick="location.reload()">Re-attempt Test</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questionsData = [
+      { id: 1, question: "Who was the British Commissioner of Odisha during the Na'Anka Durbhiksha (1866 Famine)?", options: ["T.E. Ravenshaw", "George Campbell", "Henry Ricketts", "John Beames"], correctAnswer: 0 },
+      { id: 2, question: "Which among the following feudatory states was NOT merged into Odisha on January 1, 1948?", options: ["Mayurbhanj", "Dhenkanal", "Ranpur", "Keonjhar"], correctAnswer: 0 },
+      { id: 3, question: "Under which Ganga dynasty ruler was the construction of the famous Sun Temple at Konark completed?", options: ["Anangabhima Deva III", "Narasimhadeva I", "Chodaganga Deva", "Bhanudeva I"], correctAnswer: 1 },
+      { id: 4, question: "The historic 'Raktatirtha' Eram incident in Bhadrak district took place on which exact date during the Quit India Movement?", options: ["28 September 1942", "15 August 1942", "2 October 1942", "9 August 1942"], correctAnswer: 0 },
+      { id: 5, question: "Who was the leader of the Ghumsar Rebellion of 1835?", options: ["Laxman Naik", "Dora Bissoyi", "Chakra Bisoi", "Radhanath Ray"], correctAnswer: 1 },
+      { id: 6, question: "Which rock edict of Emperor Ashoka specifically details the horrors and casualty figures of the Kalinga War?", options: ["Major Rock Edict X", "Major Rock Edict XIII", "Major Rock Edict XI", "Pillar Edict VII"], correctAnswer: 1 },
+      { id: 7, question: "Which river in Odisha originates from the Gonasika hills in Keonjhar district?", options: ["Baitarani", "Brahmani", "Budhabalanga", "Rushikulya"], correctAnswer: 0 },
+      { id: 8, question: "The 'Deomali' peak, the highest mountain peak in Odisha, is located in which district?", options: ["Rayagada", "Koraput", "Gajapati", "Kandhamal"], correctAnswer: 1 },
+      { id: 9, question: "Which wildlife sanctuary in Odisha is designated as a 'Melanistic Tiger' habitat?", options: ["Bhitarkanika", "Similipal National Park", "Satkosia Tiger Reserve", "Debrigarh Sanctuary"], correctAnswer: 1 },
+      { id: 10, question: "Which Odisha salt lake was declared a Ramsar Site first in India (1981) alongside Keoladeo National Park?", options: ["Ansupa Lake", "Chilika Lake", "Tampara Lake", "Kanjia Lake"], correctAnswer: 1 },
+      { id: 11, question: "Which Article of the Indian Constitution grants the Governor of a state the power to issue Ordinances during recess of the Legislature?", options: ["Article 213", "Article 123", "Article 163", "Article 200"], correctAnswer: 0 },
+      { id: 12, question: "Which Schedule of the Indian Constitution contains the Anti-Defection Law provisions?", options: ["8th Schedule", "9th Schedule", "10th Schedule", "11th Schedule"], correctAnswer: 2 },
+      { id: 13, question: "By which Constitutional Amendment Act was the Voting Age in India reduced from 21 years to 18 years?", options: ["42nd Amendment", "44th Amendment", "61st Amendment", "73rd Amendment"], correctAnswer: 2 },
+      { id: 14, question: "The concept of 'Directive Principles of State Policy' (DPSP) in the Indian Constitution was borrowed from which country?", options: ["Ireland", "USA", "USSR", "Australia"], correctAnswer: 0 },
+      { id: 15, question: "Who presides over a Joint Sitting of both Houses of Parliament in India?", options: ["President of India", "Vice-President of India", "Speaker of the Lok Sabha", "Prime Minister"], correctAnswer: 2 },
+      { id: 16, question: "Which Writ is issued by a higher court to stop a lower court or tribunal from exceeding its jurisdiction?", options: ["Habeas Corpus", "Mandamus", "Prohibition", "Quo-Warranto"], correctAnswer: 2 },
+      { id: 17, question: "What is the fundamental fiscal principle behind the term 'Gresham's Law' in economics?", options: ["Good money drives out bad money", "Bad money drives out good money", "Inflation leads to unemployment", "Supply creates its own demand"], correctAnswer: 1 },
+      { id: 18, question: "Which Mahajanapada in ancient India had its capital at Champa?", options: ["Anga", "Magadha", "Vatsa", "Kosala"], correctAnswer: 0 },
+      { id: 19, question: "Who among the Mughal rulers re-imposed the Jizya tax in 1679?", options: ["Akbar", "Shah Jahan", "Aurangzeb", "Jahangir"], correctAnswer: 2 },
+      { id: 20, question: "In which year was the Permanent Settlement (Zamindari System) introduced in Bengal and Bihar by Lord Cornwallis?", options: ["1773", "1793", "1813", "1853"], correctAnswer: 1 },
+      { id: 21, question: "Who founded the 'Atmiya Sabha' in 1815, which later turned into the Brahmo Samaj?", options: ["Swami Vivekananda", "Raja Ram Mohan Roy", "Dayananda Saraswati", "Ishwar Chandra Vidyasagar"], correctAnswer: 1 },
+      { id: 22, question: "Which Viceroy of India passed the Vernacular Press Act of 1878?", options: ["Lord Ripon", "Lord Lytton", "Lord Curzon", "Lord Dufferin"], correctAnswer: 1 },
+      { id: 23, question: "The 'Boundary Line' between India and Pakistan demarcated in 1947 is known as:", options: ["Durand Line", "Radcliffe Line", "McMahon Line", "Mannerheim Line"], correctAnswer: 1 },
+      { id: 24, question: "Which atmospheric layer reflects radio waves back to Earth, aiding long-distance radio communication?", options: ["Troposphere", "Stratosphere", "Ionosphere (Thermosphere)", "Mesosphere"], correctAnswer: 2 },
+      { id: 25, question: "Which ocean current is a warm ocean current in the Atlantic Ocean?", options: ["Labrador Current", "Gulf Stream", "Canary Current", "Benguela Current"], correctAnswer: 1 },
+      { id: 26, question: "The Tropic of Cancer (23.5° N) does NOT pass through which of the following Indian states?", options: ["Tripura", "Mizoram", "Odisha", "Rajasthan"], correctAnswer: 2 },
+      { id: 27, question: "Which soil type in India covers the largest land area?", options: ["Black Soil", "Red Soil", "Alluvial Soil", "Laterite Soil"], correctAnswer: 2 },
+      { id: 28, question: "Which hormone regulates the level of calcium in human blood along with Parathyroid Hormone (PTH)?", options: ["Insulin", "Calcitonin", "Thyroxine", "Oxytocin"], correctAnswer: 1 },
+      { id: 29, question: "What is the chemical name of Vitamin B12?", options: ["Riboflavin", "Cyanocobalamin", "Thiamine", "Pyridoxine"], correctAnswer: 1 },
+      { id: 30, question: "Which metal element is present in the central core of the Chlorophyll molecule?", options: ["Iron", "Magnesium", "Calcium", "Zinc"], correctAnswer: 1 },
+      { id: 31, question: "What is the unit of Electrical Conductance in the SI system?", options: ["Ohm", "Siemens", "Tesla", "Henry"], correctAnswer: 1 },
+      { id: 32, question: "Which phenomenon explains why a pencil appears bent when partially immersed in a glass of water?", options: ["Total Internal Reflection", "Dispersion", "Refraction", "Diffraction"], correctAnswer: 2 },
+      { id: 33, question: "What is the sound frequency range of Human Hearing (Audible range)?", options: ["Below 20 Hz", "20 Hz to 20,000 Hz", "Above 20,000 Hz", "100 Hz to 50,000 Hz"], correctAnswer: 1 },
+      { id: 34, question: "What is the escape velocity required to leave Earth's gravitational field from its surface?", options: ["9.8 km/s", "11.2 km/s", "7.9 km/s", "15.0 km/s"], correctAnswer: 1 },
+      { id: 35, question: "What is the main constituent gas of Compressed Natural Gas (CNG)?", options: ["Propane", "Butane", "Methane", "Ethane"], correctAnswer: 2 },
+      { id: 36, question: "Who was the chief author of the 'Prachi Valley Civilisation' excavations and research in Odisha?", options: ["N.K. Sahu", "Raybahadur Chintamani Acharya", "Pandit Krupasindhu Mishra", "Padma Shri Paramananda Acharya"], correctAnswer: 2 },
+      { id: 37, question: "Which famous festival in Odisha is celebrated on the full moon day of Jyestha month, involving the ceremonial bathing of Lord Jagannath?", options: ["Snana Yatra", "Bahuda Yatra", "Chandan Yatra", "Pana Sankranti"], correctAnswer: 0 },
+      { id: 38, question: "Which is the oldest operating port on the coast of Odisha, historically known as Che-li-ta-lo?", options: ["Paradeep", "Dhamra", "Manikapatna / Palur", "Gopalpur"], correctAnswer: 2 },
+      { id: 39, question: "Under the NITI Aayog's India Innovation Index, which body acts as the chairperson of NITI Aayog?", options: ["President of India", "Prime Minister of India", "Finance Minister", "Governor of RBI"], correctAnswer: 1 },
+      { id: 40, question: "Which statutory body in India is responsible for regulating police standards and research under the Ministry of Home Affairs?", options: ["CBI", "BPR&D (Bureau of Police Research and Development)", "NIA", "NCRB"], correctAnswer: 1 },
+      { id: 41, question: "Choose the correct option: \"Hardly had the police arrived at the spot _____ the crowd dispersed.\"", options: ["than", "then", "when", "after"], correctAnswer: 2 },
+      { id: 42, question: "Fill in the blank: \"Neither the Inspector nor his constables _____ present in the station during the incident.\"", options: ["was", "were", "is", "have"], correctAnswer: 1 },
+      { id: 43, question: "Choose the correct passive voice: \"Someone stole my bike yesterday.\"", options: ["My bike was stolen yesterday.", "My bike was stolen by someone yesterday.", "Yesterday someone has stolen my bike.", "My bike had been stolen yesterday."], correctAnswer: 0 },
+      { id: 44, question: "Choose the correct meaning of the idiom: \"To burn the candle at both ends\"", options: ["To waste electricity", "To work extremely hard from early morning until late night", "To act foolishly in danger", "To spend money lavishly"], correctAnswer: 1 },
+      { id: 45, question: "Select the correct indirect speech: The magistrate said, \"Bring the accused before me.\"", options: ["The magistrate ordered them to bring the accused before him.", "The magistrate requested to bring the accused before me.", "The magistrate asked that bring the accused before him.", "The magistrate commanded to bring accused before me."], correctAnswer: 0 },
+      { id: 46, question: "Find the error in the sentence: \"He is senior (A) / than me (B) / in service (C) / No Error (D)\"", options: ["A", "B", "C", "D"], correctAnswer: 1 },
+      { id: 47, question: "Select the correct antonym of the word: \"OBSTINATE\"", options: ["Stubborn", "Flexible / Pliable", "Rigid", "Callous"], correctAnswer: 1 },
+      { id: 48, question: "Fill in the preposition: \"He died _____ overwork.\"", options: ["of", "from", "by", "with"], correctAnswer: 1 },
+      { id: 49, question: "Select the correctly spelled word:", options: ["Bureaucracy", "Beureaucracy", "Bureucracy", "Burocracy"], correctAnswer: 0 },
+      { id: 50, question: "Choose one word substitution for: \"A person who collects or studies stamps.\"", options: ["Numismatist", "Philatelist", "Somnambulist", "Philanthropist"], correctAnswer: 1 },
+      { id: 51, question: "Fill in the blank: \"If he _____ studied hard, he would have passed the constable examination.\"", options: ["has", "had", "would have", "should have"], correctAnswer: 1 },
+      { id: 52, question: "Identify the part of speech of the bold word: \"The fast train arrived late.\"", options: ["Adverb", "Adjective", "Noun", "Verb"], correctAnswer: 1 },
+      { id: 53, question: "Fill in the blank: \"The jury _____ divided in their opinion.\"", options: ["was", "were", "is", "has been"], correctAnswer: 1 },
+      { id: 54, question: "Complete the sentence: \"He acted as though he _____ the boss.\"", options: ["is", "was", "were", "has been"], correctAnswer: 2 },
+      { id: 55, question: "Choose the correct synonym of: \"METICULOUS\"", options: ["Careless", "Painstaking / Careful", "Hasty", "Ignorant"], correctAnswer: 1 },
+      { id: 56, question: "Select the correct order of adjectives: \"She bought a _____ bag.\"", options: ["leather black beautiful small", "beautiful small black leather", "small beautiful black leather", "black small leather beautiful"], correctAnswer: 1 },
+      { id: 57, question: "Choose the correct question tag: \"Let's go for a walk, _____?\"", options: ["don't we", "shall we", "will we", "value we"], correctAnswer: 1 },
+      { id: 58, question: "Which option correctly transforms into a simple sentence: \"Although he was rich, he was unhappy.\"", options: ["He was rich but unhappy.", "In spite of being rich, he was unhappy.", "Because he was rich, he was unhappy.", "He was rich so he was unhappy."], correctAnswer: 1 },
+      { id: 59, question: "Choose the correct usage: \"I have known him _____ five years.\"", options: ["since", "for", "from", "during"], correctAnswer: 1 },
+      { id: 60, question: "Select the correct meaning of the phrase: \"To bite the dust\"", options: ["To get dirty", "To suffer defeat or die", "To eat hungry", "To build houses"], correctAnswer: 1 },
+      { id: 61, question: "What is the plural form of the noun \"Crisis\"?", options: ["Crises", "Crisises", "Crisi", "Crisiss"], correctAnswer: 0 },
+      { id: 62, question: "\"He is the taller of the two brothers.\" Is this sentence correct?", options: ["Incorrect, use 'tallest'", "Correct, comparative degree with 'the' for choice between two", "Incorrect, remove 'the'", "Incorrect, use 'more tall'"], correctAnswer: 1 },
+      { id: 63, question: "Complete the proverb: \"A rolling stone gathers no _____.\"", options: ["dust", "moss", "water", "gold"], correctAnswer: 1 },
+      { id: 64, question: "Choose the correctly structured sentence:", options: ["One should do his duty.", "One should do one's duty.", "One should do her duty.", "One must do their duty."], correctAnswer: 1 },
+      { id: 65, question: "Select the antonym of \"TRANSPARENT\":", options: ["Clear", "Opaque", "Translucent", "Luminous"], correctAnswer: 1 },
+      { id: 66, question: "Fill in the blank: \"The police _____ investigating the murder case.\"", options: ["is", "are", "has", "was"], correctAnswer: 1 },
+      { id: 67, question: "Choose the word that means \"A speech made without previous preparation\":", options: ["Extempore", "Maiden speech", "Soliloquy", "Oration"], correctAnswer: 0 },
+      { id: 68, question: "Correct the underlined part: \"I look forward to meet you.\"", options: ["to meeting", "for meeting", "to met", "no correction"], correctAnswer: 0 },
+      { id: 69, question: "Choose the correct form: \"The cost of all these essential items _____ risen sharply.\"", options: ["have", "has", "are", "were"], correctAnswer: 1 },
+      { id: 70, question: "\"Bread and butter _____ his daily breakfast.\"", options: ["are", "is", "were", "have been"], correctAnswer: 1 },
+      { id: 71, question: "In the OSI Reference Model, which layer is responsible for Process-to-Process delivery and multiplexing/demultiplexing using Port Numbers?", options: ["Network Layer", "Data Link Layer", "Transport Layer", "Session Layer"], correctAnswer: 2 },
+      { id: 72, question: "What is the subnet mask for a standard Class C IPv4 address?", options: ["255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.255"], correctAnswer: 2 },
+      { id: 73, question: "Which network attack involves flooding a target system or server with superfluous requests to overload systems and disrupt services?", options: ["Man-in-the-Middle (MitM)", "Denial of Service (DoS / DDoS)", "Phishing", "SQL Injection"], correctAnswer: 1 },
+      { id: 74, question: "In Microsoft Excel, which function key opens the 'Save As' dialog box directly?", options: ["F2", "F7", "F12", "F5"], correctAnswer: 2 },
+      { id: 75, question: "What type of RAM needs periodic refreshing of electrical charge thousands of times per second to retain data?", options: ["SRAM (Static RAM)", "DRAM (Dynamic RAM)", "NVRAM", "FeRAM"], correctAnswer: 1 },
+      { id: 76, question: "What is the length of an IPv6 (Internet Protocol Version 6) address?", options: ["32 bits", "64 bits", "128 bits", "256 bits"], correctAnswer: 2 },
+      { id: 77, question: "In MS Word, what shortcut combination shifts text from lowercase to UPPERCASE or Title Case (Change Case)?", options: ["Shift + F3", "Ctrl + Shift + C", "Alt + F3", "Ctrl + F3"], correctAnswer: 0 },
+      { id: 78, question: "Which non-volatile memory chips store the boot program (firmware) called BIOS on a computer motherboard?", options: ["DRAM", "Cache Memory", "EEPROM / ROM", "Virtual Memory"], correctAnswer: 2 },
+      { id: 79, question: "Which malicious code hides inside an seemingly legitimate software program to trick users into installing it?", options: ["Worm", "Trojan Horse", "Spyware", "Keylogger"], correctAnswer: 1 },
+      { id: 80, question: "What is the default file extension of a database file created in Microsoft Access 2007 and newer versions?", options: [".mdb", ".accdb", ".dbf", ".docx"], correctAnswer: 1 },
+      { id: 81, question: "Which protocol operates on TCP Port 22 and provides secure, encrypted remote command-line login access?", options: ["Telnet", "SSH (Secure Shell)", "FTP", "SMTP"], correctAnswer: 1 },
+      { id: 82, question: "In MS Powerpoint, which view displays all slides in miniature form for easy re-ordering?", options: ["Slide Master View", "Slide Sorter View", "Reading View", "Outline View"], correctAnswer: 1 },
+      { id: 83, question: "In CPU architecture, what does 'ALU' stand for?", options: ["Arithmetic Logic Unit", "Array Logic Unit", "Automated Logic Utility", "Algorithm Processing Unit"], correctAnswer: 0 },
+      { id: 84, question: "Which memory hierarchy level operates at the fastest speed inside a modern computer?", options: ["L1 Cache", "CPU Registers", "Main RAM", "SSD Storage"], correctAnswer: 1 },
+      { id: 85, question: "What is the command used in Windows Command Prompt (cmd) to trace the path packets take to reach a destination host?", options: ["ping", "tracert", "ipconfig", "netstat"], correctAnswer: 1 },
+      { id: 86, question: "In Linux Operating Systems, which command is used to change file permissions?", options: ["chown", "chmod", "chgrp", "sudo"], correctAnswer: 1 },
+      { id: 87, question: "In database management systems (DBMS), what does the acronym 'ACID' properties stand for?", options: ["Atomicity, Consistency, Isolation, Durability", "Access, Control, Information, Data", "Array, Code, Interface, Definition", "Algorithm, Calculation, Input, Display"], correctAnswer: 0 },
+      { id: 88, question: "What is the default port number used by SMTP (Simple Mail Transfer Protocol) for sending unencrypted emails?", options: ["21", "25", "110", "143"], correctAnswer: 1 },
+      { id: 89, question: "Which shortcut key inserts a new worksheet in MS Excel instantly?", options: ["Shift + F11", "Alt + Shift + F1", "Ctrl + N", "Both (A) and (B)"], correctAnswer: 3 },
+      { id: 90, question: "What type of cyber attack intercepts communications between two parties without their knowledge?", options: ["Cross-Site Scripting (XSS)", "Man-in-the-Middle Attack (MitM)", "Brute Force Attack", "Zero-Day Exploit"], correctAnswer: 1 },
+      { id: 91, question: "In binary representation, how many distinct values can be represented using 8 bits (1 Byte)?", options: ["128", "256", "512", "64"], correctAnswer: 1 },
+      { id: 92, question: "Which printer technology uses microscopic ink droplets sprayed onto paper to form text and images?", options: ["Laser Printer", "Inkjet Printer", "Thermal Printer", "Dot Matrix Printer"], correctAnswer: 1 },
+      { id: 93, question: "What is the main function of 'ARP' (Address Resolution Protocol) in computer networks?", options: ["Converts Domain Name to IP Address", "Resolves IP Address to MAC Address", "Dynamically assigns IP addresses to clients", "Routes packets across networks"], correctAnswer: 1 },
+      { id: 94, question: "In Windows OS, which shortcut locks your computer screen immediately?", options: ["Windows Key + L", "Ctrl + Alt + Del", "Windows Key + D", "Alt + F4"], correctAnswer: 0 },
+      { id: 95, question: "In MS Word, what does 'Ctrl + Equal Sign (=)' perform on selected text?", options: ["Superscript", "Subscript", "Strikethrough", "Double Underline"], correctAnswer: 1 },
+      { id: 96, question: "Which component acts as a security barrier between an internal trusted network and untrusted external networks?", options: ["Switch", "Router", "Firewall", "Repeater"], correctAnswer: 2 },
+      { id: 97, question: "In Microsoft Excel, what error code appears if a formula divides a number by zero or an empty cell?", options: ["#VALUE!", "#DIV/0!", "#REF!", "#N/A"], correctAnswer: 1 },
+      { id: 98, question: "What is 'Phishing'?", options: ["A method of illegally hacking Wi-Fi networks", "Fraudulent attempts to obtain sensitive information like passwords by masquerading as a trustworthy entity in electronic communication", "Installing malware via USB drives", "Overclocking CPU processing cores"], correctAnswer: 1 },
+      { id: 99, question: "Which HTTP response code signifies '404' in Web Browsing?", options: ["Unauthorized", "Internal Server Error", "Not Found", "Bad Gateway"], correctAnswer: 2 },
+      { id: 100, question: "What is the primary purpose of 'Defragmentation' utility software in traditional Hard Disk Drives (HDD)?", options: ["Deletes virus files from the hard disk", "Reorganizes fragmented data so storage drives can operate more efficiently", "Backs up system files to the cloud", "Compresses large video files"], correctAnswer: 1 }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(questionsData.length).fill(null);
+    let questionStates = new Array(questionsData.length).fill('not-visited');
+    let timerInterval = null;
+    let timeLeft = 45 * 60; // 45 Minutes
+    let isExamActive = false;
+
+    // Push state into history to trap mobile back button press
+    window.history.pushState({ page: 'exam' }, '', window.location.href);
+
+    window.addEventListener('popstate', function (e) {
+      if (isExamActive) {
+        // Re-push state so page doesn't go back immediately
+        window.history.pushState({ page: 'exam' }, '', window.location.href);
+        // Show confirmation modal
+        showExitModal();
+      }
+    });
+
+    // Also warn if user tries to close/reload tab
+    window.addEventListener('beforeunload', function (e) {
+      if (isExamActive) {
+        e.preventDefault();
+        e.returnValue = 'Are you sure you want to quit this test?';
+      }
+    });
+
+    function showExitModal() {
+      document.getElementById('exit-modal').classList.add('show');
+    }
+
+    function cancelExitTest() {
+      document.getElementById('exit-modal').classList.remove('show');
+    }
+
+    function confirmExitTest() {
+      isExamActive = false;
+      document.getElementById('exit-modal').classList.remove('show');
+      location.reload(); // Restarts/Exits test
+    }
+
+    function validateStartForm() {
+      const name = document.getElementById('candidate-name-input').value.trim();
+      const checked = document.getElementById('declaration-checkbox').checked;
+      document.getElementById('btn-start-test').disabled = !(name.length > 0 && checked);
+    }
+
+    function startMockTest() {
+      const name = document.getElementById('candidate-name-input').value.trim();
+      document.getElementById('user-name-display').innerText = name;
+      
+      const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      document.getElementById('user-avatar').innerText = initials || 'SI';
+
+      document.getElementById('instructions-overlay').style.display = 'none';
+      questionStates[0] = 'not-answered';
+      
+      isExamActive = true;
+      renderQuestion();
+      renderPalette();
+      startTimer();
+    }
+
+    function renderQuestion() {
+      const q = questionsData[currentQuestion];
+      document.getElementById('q-header-title').innerText = `Question ${q.id} of ${questionsData.length}`;
+      document.getElementById('question-text').innerText = `${q.id}. ${q.question}`;
+
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const isSelected = userAnswers[currentQuestion] === idx;
+        const card = document.createElement('div');
+        card.className = `option-card ${isSelected ? 'selected' : ''}`;
+        card.onclick = () => selectOption(idx);
+
+        card.innerHTML = `
+          <input type="radio" name="opt" class="option-radio" ${isSelected ? 'checked' : ''}>
+          <label class="option-label">${String.fromCharCode(65 + idx)}. ${opt}</label>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('btn-prev').disabled = currentQuestion === 0;
+    }
+
+    function selectOption(idx) {
+      userAnswers[currentQuestion] = idx;
+      renderQuestion();
+    }
+
+    function clearResponse() {
+      userAnswers[currentQuestion] = null;
+      if (questionStates[currentQuestion] === 'answered' || questionStates[currentQuestion] === 'ans-marked') {
+        questionStates[currentQuestion] = 'not-answered';
+      }
+      renderQuestion();
+      renderPalette();
+    }
+
+    function saveAndNext() {
+      if (userAnswers[currentQuestion] !== null) {
+        if (questionStates[currentQuestion] === 'marked' || questionStates[currentQuestion] === 'ans-marked') {
+          questionStates[currentQuestion] = 'ans-marked';
+        } else {
+          questionStates[currentQuestion] = 'answered';
+        }
+      } else {
+        if (questionStates[currentQuestion] !== 'marked' && questionStates[currentQuestion] !== 'ans-marked') {
+          questionStates[currentQuestion] = 'not-answered';
+        }
+      }
+
+      if (currentQuestion < questionsData.length - 1) {
+        currentQuestion++;
+        if (questionStates[currentQuestion] === 'not-visited') {
+          questionStates[currentQuestion] = 'not-answered';
+        }
+      }
+      renderQuestion();
+      renderPalette();
+    }
+
+    function markForReview() {
+      if (userAnswers[currentQuestion] !== null) {
+        questionStates[currentQuestion] = 'ans-marked';
+      } else {
+        questionStates[currentQuestion] = 'marked';
+      }
+
+      if (currentQuestion < questionsData.length - 1) {
+        currentQuestion++;
+        if (questionStates[currentQuestion] === 'not-visited') {
+          questionStates[currentQuestion] = 'not-answered';
+        }
+      }
+      renderQuestion();
+      renderPalette();
+    }
+
+    function navigateQuestion(dir) {
+      const newIdx = currentQuestion + dir;
+      if (newIdx >= 0 && newIdx < questionsData.length) {
+        currentQuestion = newIdx;
+        if (questionStates[currentQuestion] === 'not-visited') {
+          questionStates[currentQuestion] = 'not-answered';
+        }
+        renderQuestion();
+        renderPalette();
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      currentQuestion = idx;
+      if (questionStates[currentQuestion] === 'not-visited') {
+        questionStates[currentQuestion] = 'not-answered';
+      }
+      renderQuestion();
+      renderPalette();
+    }
+
+    function renderPalette() {
+      const grid = document.getElementById('palette-grid');
+      grid.innerHTML = '';
+
+      questionsData.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        const st = questionStates[idx];
+        btn.className = `palette-btn status-${st} ${idx === currentQuestion ? 'active' : ''}`;
+        btn.innerText = idx + 1;
+        btn.onclick = () => jumpToQuestion(idx);
+        grid.appendChild(btn);
+      });
+
+      updateCounts();
+    }
+
+    function updateCounts() {
+      let visited = 0, notAnswered = 0, answered = 0, marked = 0, ansMarked = 0;
+      questionStates.forEach(st => {
+        if (st === 'not-visited') visited++;
+        else if (st === 'not-answered') notAnswered++;
+        else if (st === 'answered') answered++;
+        else if (st === 'marked') marked++;
+        else if (st === 'ans-marked') ansMarked++;
+      });
+
+      document.getElementById('cnt-visited').innerText = visited;
+      document.getElementById('cnt-not-answered').innerText = notAnswered;
+      document.getElementById('cnt-answered').innerText = answered;
+      document.getElementById('cnt-marked').innerText = marked;
+      document.getElementById('cnt-ans-marked').innerText = ansMarked;
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitExam();
+          return;
+        }
+        timeLeft--;
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        document.getElementById('timer-display').innerText = 
+          `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }, 1000);
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      sidebar.classList.toggle('open');
+      backdrop.classList.toggle('show');
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function submitExam() {
+      if (confirm("Are you sure you want to submit the exam?")) {
+        isExamActive = false;
+        clearInterval(timerInterval);
+        let correct = 0;
+        let wrong = 0;
+        let detailsHTML = '';
+
+        questionsData.forEach((q, idx) => {
+          const userAns = userAnswers[idx];
+          let statusClass = 'unanswered';
+
+          if (userAns !== null) {
+            if (userAns === q.correctAnswer) {
+              correct++;
+              statusClass = 'correct';
+            } else {
+              wrong++;
+              statusClass = 'incorrect';
+            }
+          }
+
+          detailsHTML += `
+            <div class="result-item ${statusClass}">
+              <div class="result-q-title">Q${q.id}. ${q.question}</div>
+              <div style="font-size:0.8rem; color:#475569;">
+                Your Answer: <strong>${userAns !== null ? q.options[userAns] : 'Not Answered'}</strong> | 
+                Correct Answer: <strong style="color:#10b981;">${q.options[q.correctAnswer]}</strong>
+              </div>
+            </div>
+          `;
+        });
+
+        const score = (correct * 1.0) - (wrong * 0.25);
+        document.getElementById('res-score').innerText = `${score.toFixed(2)} / 100`;
+        document.getElementById('res-correct').innerText = correct;
+        document.getElementById('res-wrong').innerText = wrong;
+        document.getElementById('results-detail-list').innerHTML = detailsHTML;
+
+        document.getElementById('result-modal').classList.add('show');
+      }
+    }
+  </script>
